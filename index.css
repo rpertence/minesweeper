@@ -30,6 +30,7 @@ button {
 #board {
     background-color: #c1c1c1;
     border: solid 1px rgb(146, 146, 146);
+	margin: 20px;
 }
 
 .cell {

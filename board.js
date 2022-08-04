@@ -1,7 +1,18 @@
-const findCell = (row, column) =>
+class Board {
+    constructor(rows, columns, cellSize, bombsCount) {
+this.rows = rows;
+this.columns = columns;
+this.cellSize = cellSize;
+this.bombsCount = bombsCount;
+this.width = columns * cellSize;
+this.height = rows * cellSize;
+this.cells = [];
+    }
+
+    findCell = (row, column) =>
   cells.find((c) => c.row === row && c.column === column);
 
-const addNeighbors = (cell) => {
+addNeighbors = (cell) => {
   cell.addNeighbor(findCell(cell.row - 1, cell.column - 1));
   cell.addNeighbor(findCell(cell.row - 1, cell.column));
   cell.addNeighbor(findCell(cell.row - 1, cell.column + 1));
@@ -12,15 +23,17 @@ const addNeighbors = (cell) => {
   cell.addNeighbor(findCell(cell.row + 1, cell.column + 1));
 };
 
-const rows = 30;
-const columns = 100;
-const cellSize = 30;
-let bombsCount = 200;
 
-const width = columns * cellSize;
-const height = rows * cellSize;
 
-const cells = [];
+// const rows = 15;
+// const columns = 15;
+// const cellSize = 50;
+// let bombsCount = 30;
+
+// const width = columns * cellSize;
+// const height = rows * cellSize;
+
+//const cells = [];
 
 const board = document.getElementById("board");
 board.style.width = `${width + 2}px`;
@@ -52,17 +65,10 @@ for (let i = 0; i < cells.length; i++) {
   div.style.height = `${cellSize}px`;
 
   div.onclick = () => cellClick(cell);
-
-  div.ondblclick = (e) => {
+  div.onauxclick = (e) => {
     e.preventDefault();
     cellDblClick(cell);
   };
-
-  div.onauxclick = (e) => {
-    e.preventDefault();
-    cellAuxClick(cell);
-  };
-
   div.oncontextmenu = (e) => e.preventDefault();
 
   board.append(div);
@@ -74,11 +80,9 @@ const cellClick = (cell) => {
   cell.show();
 };
 
-const cellAuxClick = (cell) => {
+const cellDblClick = (cell) => {
   cell.setFlag();
   return false;
 };
 
-const cellDblClick = (cell) => {
-  cell.clear();
-};
+}

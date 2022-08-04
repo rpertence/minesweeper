@@ -5,6 +5,7 @@ class Cell {
     this.bomb = false;
     this.neighbors = [];
     this.revealed = false;
+    this.hasFlag = false;
   }
 
   get neighborCount() {
@@ -30,6 +31,28 @@ class Cell {
       if (nc === 0) {
         for (let i = 0; i < this.neighbors.length; i++)
           this.neighbors[i].show();
+      }
+    }
+  };
+
+  setFlag = () => {
+    if (!this.revealed) {
+      this.div.style.backgroundColor = this.hasFlag
+        ? "#c1c1c1"
+        : "rgb(202 202 255)";
+      this.hasFlag = !this.hasFlag;
+    }
+  };
+
+  clear = () => {
+    console.log("clear");
+
+    if (this.revealed) {
+      const bombNeighbors = this.neighbors.filter((i) => i.bomb);
+      const allBombsFlageds = bombNeighbors.every((i) => i.hasFlag);
+
+      if (allBombsFlageds) {
+        this.neighbors.forEach((i) => !i.bomb && i.show());
       }
     }
   };
